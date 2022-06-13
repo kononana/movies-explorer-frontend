@@ -1,0 +1,189 @@
+.section__search-form {
+    margin: auto;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+   
+}
+
+.search-form {
+  padding-top: 70px;
+  padding-bottom: 47px;
+}
+
+.search-film {
+    max-width: 1280px;
+    padding-right: 70px;
+    padding-left: 70px;
+
+}
+
+.search-form__input {
+    padding-bottom: 13px;
+    background-color: inherit;
+    border: none;
+    font-size: 28px;
+    line-height: 33.9px;
+    font-weight: 500;
+    width: 100%;
+    max-width: 1060px;
+    color: inherit;
+  }
+  
+  .search-form__submit-button {
+    background-image: url(../../images/find.svg);
+    background-position: right;
+    width: 80px;
+    height: 34px;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.1s linear;
+  }
+  
+  .search-form__submit-button:hover {
+    opacity: 0.8;
+    transform: translateX(1px);
+  }
+  
+  .search-form__container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid #E8E8E8;
+  }
+  
+  .search-form__input::placeholder {
+    color: #8B8B8B;
+  }
+  
+  /* Переключатель - коробка вокруг ползунка */
+  .search-form__switch {
+    position: relative;
+    display: flex;
+    width: 36px;
+    height: 20px;
+    margin-top: 32px;
+  }
+  
+  /* Скрыть флажок HTML по умолчанию */
+  .search-form__checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* Ползунок */
+  .search-form__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    background-color: #EBEBEB;
+    transition: .4s;
+  
+  }
+  
+  .search-form__slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    transition: .4s;
+  }
+  
+  .search-form__checkbox:checked + .search-form__slider {
+    background-color: #2BE080;
+  }
+  
+  .search-form__checkbox:focus + .search-form__slider {
+    box-shadow: 0 0 1px #2BE080;
+  }
+  
+  .search-form__checkbox:checked + .search-form__slider:before {
+    transform: translateX(16px);
+  }
+  
+  .search-form__slider-name {
+    padding-left: 50px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+  
+  @media screen and (max-width: 890px) {
+    .search-film {
+        padding-right: 50px;
+        padding-left: 50px;
+      }
+      .section__search-form {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+  }
+  
+    @media screen and (max-width: 768px) {
+    .search-film {
+      padding-left: 30px;
+      padding-right: 30px;
+          }
+
+    .search-form {
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+  
+    .search-form__switch{
+      align-self: flex-end;
+      flex-direction: row-reverse;
+      margin-left: 95%;
+    }
+  
+    .search-form__slider-name {
+      padding-left: 0;
+      padding-right: 50px;
+    }
+  }
+  
+  @media screen and (max-width: 420px) {
+    .search-film {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+    .section__search-form {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+  
+    .search-form {
+      padding-top: 90px;
+      padding-bottom: 50px;
+    }
+  
+    .search-form__input {
+      font-size: 18px;
+      line-height: 21.8px;
+    }
+  
+    .search-form__submit-button {
+      margin-bottom: 9px;
+    }
+  
+    .search-form__switch{
+      margin-top: 40px;
+      margin-left: 60%;
+    }
+  
+    .search-form__slider-name {
+      font-size: 11px;
+      line-height: 18px;
+    }
+  }
+  
