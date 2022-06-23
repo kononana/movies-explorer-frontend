@@ -1,21 +1,21 @@
 import './InfoBox.css';
-import tick from "../../images/tick.svg";
-import cross from "../../images/cross.svg"
+import right from "../../images/tick.svg";
+import wrong from "../../images/cross.svg"
 import { useLocation } from 'react-router-dom';
 
-function InfoBox({ isOpen, onClose, isRequestOk }) {
+function InfoBox({ isOpen, onClose, isSuccsesful }) {
     const location = useLocation();
 
-    const figcaptionText = isRequestOk ? "Успешно!" :
+    const figcaptionText = isSuccsesful ? "Все в порядке!" :
         location.pathname === '/movies' ? "Во время запроса произошла ошибка"
-            : "Повторите запрос";
+            : "Что-то пошло не так. Повторите запрос";
 
     return (
         <article className={`popup ${isOpen ? 'popup_opened' : ''}`}>
             <div className="popup__container popup__container_type_infoTool">
                 <button className="popup__close-button" type="button" aria-label="Закрыть" onClick={onClose}></button>
                 <figure className="popup__figure">
-                    <img className='popup__image' src={isRequestOk ? tick : cross} alt="успеx" />
+                    <img className='popup__image' src={isSuccsesful ? right : wrong} alt="успеx" />
                     <figcaption className="popup__figcaption popup__figcaption_type_infoTool">{figcaptionText}</figcaption>
                 </figure>
             </div>

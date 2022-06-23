@@ -7,19 +7,16 @@ import filterMovies from '../../utils/functions';
 import Preloader from '../Preloader/Preloader';
 import InfoBox from '../InfoBox/InfoBox';
 
-function Movies({ movies, onSearchSubmit, numberOfCardsToRender, numberOfCardsToAdd, onSaveMovie, savedMoviesIds,
-    onDislikeMovie, isDataLoading, isInfoTooltipOpen, onCloseInfoTooltip, isRequestOk }) {
+function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onSaveMovie, savedMoviesIds,
+    onDislikeMovie, isDataLoading, isPopupOpened, onClosePopup, isSuccsesful }) {
 
     const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
     const [shortFilteredMovies, setShortFilterseMovies] = useState(JSON.parse(localStorage.getItem('shortFilteredMovies')) || []);
-    const [isCheckbobChecked, setIsCheckboxChecked] = useState(JSON.parse(localStorage.getItem('checkboxStatus')) || false);
-    const [cardsToRender, setCardsToRender] = useState(numberOfCardsToRender);
-    const [isSeachHandeled, setIsSearchHandled] = useState(false);
+    const [checkBoxChecked, setIsCheckboxChecked] = useState(JSON.parse(localStorage.getItem('checkboxStatus')) || false);
+    const [cardsToRender, setCardsToRender] = useState(CardsToRender);
+    const [isSearchDone, setSearchDone] = useState(false);
 
-    const handleCheckboxChange = () => {
-        setIsCheckboxChecked(!isCheckbobChecked);
-        setIsSearchHandled(true);
-    }
+   
     useEffect(() => {
         if (localStorage.getItem('filteredMovies')) {
             const filteredMovies = JSON.parse(localStorage.getItem('filteredMovies'));
@@ -27,84 +24,89 @@ function Movies({ movies, onSearchSubmit, numberOfCardsToRender, numberOfCardsTo
         }
     }, [])
 
-    const handleOnLoadFromLocalstorage = (message) => {
+    const handleCheckboxChange = () => {
+        setIsCheckboxChecked(!checkBoxChecked);
+        setSearchDone(true);
+    }
+
+    const getLoadFromLocalstorage = (message) => {
         filterMovies(movies, message)
     }
     const handleSearch = (message) => {
-        setCardsToRender(numberOfCardsToRender);
+        setCardsToRender(CardsToRender);
         onSearchSubmit((movies) => {
             const result = filterMovies(movies, message)
             setFilteredMovies(result);
-            const resultShort = result.filter((item) => item.duration < 40);
+            const resultShort = result.filter((item) => item.duration <= 40);
             setShortFilterseMovies(resultShort);
-            if (isCheckbobChecked) {
+            if (checkBoxChecked) {
                 localStorage.setItem('shortFilteredMovies', JSON.stringify(resultShort));
                 localStorage.removeItem('filteredMovies');
             } else {
                 localStorage.setItem('filteredMovies', JSON.stringify(result));
                 localStorage.removeItem('shortFilteredMovies');
             }
-            localStorage.setItem('checkboxStatus', JSON.stringify(isCheckbobChecked));
+            localStorage.setItem('checkboxStatus', JSON.stringify(checkBoxChecked));
         });
 
-        setIsSearchHandled(true);
+        setSearchDone(true);
     }
 
-    const handleButtonMoreClick = () => {
-        setCardsToRender(cardsToRender + numberOfCardsToAdd)
-    }
-
-    const handleMovieCardLike = (card) => {
+    const handleLikeMovie = (card) => {
         onSaveMovie(card)
+    }
+    
+    const addMoviesOnClick = () => {
+        setCardsToRender(cardsToRender + numberOfCardsToAdd)
     }
 
     return (
         <>
             <section className='movies'>
                 <div className='movies__content'>
-                    <SearchForm isCheckbobChecked={isCheckbobChecked} onCheckboxChange={handleCheckboxChange}
-                        onSearchSubmit={handleSearch} handleOnLoadFromLocalstorage={handleOnLoadFromLocalstorage} />
+                    <SearchForm checkBoxChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange}
+                        onSearchSubmit={handleSearch} getLoadFromLocalstorage={getLoadFromLocalstorage} />
                     {isDataLoading ?
                         <Preloader />
                         :
                         <>
-                            {isCheckbobChecked ?
-                                <>{(isSeachHandeled && shortFilteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
+                            {checkBoxChecked ?
+                                <>{(isSearchDone && shortFilteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                                 :
-                                <>{(isSeachHandeled && filteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
+                                <>{(isSearchDone && filteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                             }
                             <MoviesCardList>
-                                {isCheckbobChecked ?
+                                {checkBoxChecked ?
                                     <>
                                         {shortFilteredMovies.slice(0, cardsToRender).map((item) => (
-                                            <MoviesCard card={item} {...item} key={item.id} handleMovieCardLike={handleMovieCardLike} savedMoviesIds={savedMoviesIds}
+                                            <MoviesCard card={item} {...item} key={item.id} handleLikeMovie={handleLikeMovie} savedMoviesIds={savedMoviesIds}
                                                 onDislikeMovie={onDislikeMovie} />
                                         ))}
                                     </>
                                     :
                                     <>
                                         {filteredMovies.slice(0, cardsToRender).map((item) => (
-                                            <MoviesCard card={item} {...item} key={item.id} handleMovieCardLike={handleMovieCardLike} savedMoviesIds={savedMoviesIds}
+                                            <MoviesCard card={item} {...item} key={item.id} handleLikeMovie={handleLikeMovie} savedMoviesIds={savedMoviesIds}
                                                 onDislikeMovie={onDislikeMovie} />
                                         ))}
                                     </>}
 
                             </MoviesCardList>
 
-                            {isCheckbobChecked ?
+                            {checkBoxChecked ?
                                 <>
-                                    {shortFilteredMovies.length > shortFilteredMovies.slice(0, numberOfCardsToRender).length && shortFilteredMovies.length >= cardsToRender ?
+                                    {shortFilteredMovies.length > shortFilteredMovies.slice(0, CardsToRender).length && shortFilteredMovies.length >= cardsToRender ?
                                         <div className='more-btn-container'>
-                                            <button className='more-btn' onClick={handleButtonMoreClick}>Ещё</button>
+                                            <button className='more-btn' onClick={addMoviesOnClick}>Ещё</button>
                                         </div>
                                         :
                                         null}
                                 </>
                                 :
                                 <>
-                                    {filteredMovies.length > filteredMovies.slice(0, numberOfCardsToRender).length && filteredMovies.length >= cardsToRender ?
+                                    {filteredMovies.length > filteredMovies.slice(0, CardsToRender).length && filteredMovies.length >= cardsToRender ?
                                         <div className='more-btn-container'>
-                                            <button className='more-btn' onClick={handleButtonMoreClick}>Ещё</button>
+                                            <button className='more-btn' onClick={addMoviesOnClick}>Ещё</button>
                                         </div>
                                         :
                                         null}
@@ -114,7 +116,7 @@ function Movies({ movies, onSearchSubmit, numberOfCardsToRender, numberOfCardsTo
 
                 </div>
             </section>
-            <InfoBox isOpen={isInfoTooltipOpen} onClose={onCloseInfoTooltip} isRequestOk={isRequestOk} />
+            <InfoBox isOpen={isPopupOpened} onClose={onClosePopup} isSuccsesful={isSuccsesful} />
         </>
     )
 }

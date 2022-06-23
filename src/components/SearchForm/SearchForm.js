@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import Filtration from '../Filtration/Filtration';
 
-const SearchForm = ({ isCheckbobChecked, onCheckboxChange, onSearchSubmit}) => {
+const SearchForm = ({ checkBoxChecked, onCheckboxChange, onSearchSubmit}) => {
     const location = useLocation();
     const [error, setError] = useState('');
     const [searchMessage, setSearchMessage] = useState(location.pathname === '/movies' ? localStorage.getItem('searchMessage') || '' : '');
@@ -37,7 +37,7 @@ const SearchForm = ({ isCheckbobChecked, onCheckboxChange, onSearchSubmit}) => {
           <input type='text' value={searchMessage || ''} onChange={handleChange} className='search-form__input' placeholder='Фильм'></input>
             <button className="search-form__submit-button"></button>
           </div>
-          <Filtration isChecked={isCheckbobChecked} onCheckboxChange={handleCheckboxChange} />
+          <Filtration isChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange} />
         </form>
   
   

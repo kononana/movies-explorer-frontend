@@ -3,10 +3,11 @@ import "./Profile.css";
 import { useState } from "react";
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { useFormWithValidation } from '../useFormWithValidation/useFormWithValidation';
-import InfoBox from '../InfoBox/InfoBox';
+import InfoTooltip from "../InfoBox/InfoBox";
+import InfoBox from "../InfoBox/InfoBox";
 
 
-const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isRequestOk, isInfoTooltipOpen, onCloseInfoTooltip }) => {
+const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isSuccsesful, isPopupOpened, onClosePopup }) => {
     const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
     const currentUser = React.useContext(CurrentUserContext);
     const [isInfoChanged, setIsInfoChanged] = useState(false);
@@ -29,7 +30,7 @@ const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isRequestOk, isInfoToolti
         setReadOnly(false);
     }
 
-    const handleUpdateUserInfoSubmit = (event) => {
+    const handleUpdateUserProfile = (event) => {
         event.preventDefault();
         onUpdateUserInfo(values);
         resetForm({ name: currentUser.name, email: currentUser.email }, {}, false)
@@ -43,7 +44,7 @@ const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isRequestOk, isInfoToolti
     return (
         <>
             <section className="profile">
-                <form className="profile__container" onSubmit={handleUpdateUserInfoSubmit}>
+                <form className="profile__container" onSubmit={handleUpdateUserProfile}>
                     <h2 className="profile__greeting">Привет, {currentUser.name}!</h2>
                     <div className="profile__info">
                         <div className="profile__info-container">
@@ -74,7 +75,7 @@ const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isRequestOk, isInfoToolti
                     </div>
                 </form>
             </section>
-            <InfoBox isOpen={isInfoTooltipOpen} onClose={onCloseInfoTooltip} isRequestOk={isRequestOk} />
+            <InfoBox isOpen={isPopupOpened} onClose={onClosePopup} isSuccsesful={isSuccsesful} />
         </>
     )
 }

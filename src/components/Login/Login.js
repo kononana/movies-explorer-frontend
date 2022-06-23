@@ -3,7 +3,7 @@ import SignForm from '../SignForm/SignForm';
 import { useFormWithValidation } from '../useFormWithValidation/useFormWithValidation';
 import InfoBox from '../InfoBox/InfoBox';
 
-const Login = ({ onLoginSubmit, isRequestOk, isInfoTooltipOpen, onCloseInfoTooltip }) => {
+const Login = ({ onLoginSubmit, isSuccsesful, isPopupOpened, onClosePopup }) => {
     const { values, errors, isValid, handleChange } = useFormWithValidation();
 
     const onSubmit = (event) => {
@@ -23,7 +23,7 @@ const Login = ({ onLoginSubmit, isRequestOk, isInfoTooltipOpen, onCloseInfoToolt
                 required minLength='4' maxLength='30' value={values.password} onChange={handleChange}></input>
             <span className='form__error'>{errors.password}</span>
         </SignForm >
-        <InfoBox isOpen={isInfoTooltipOpen} onClose={onCloseInfoTooltip} isRequestOk={isRequestOk} />
+        <InfoBox isOpen={isPopupOpened} onClose={onClosePopup} isSuccsesful={isSuccsesful} />
         </>
     )
 }

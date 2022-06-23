@@ -1,9 +1,9 @@
 import './MoviesCard.css';
-import film from '../../images/movie1.jpg';
+// import film from '../../images/movie1.jpg';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const MoviesCard = ({ card, handleMovieCardLike, handleDeleteMovie, savedMoviesIds, onDislikeMovie }) => {
+const MoviesCard = ({ card, handleLikeMovie, handleDeleteMovie, savedMoviesIds, onDislikeMovie }) => {
     const location = useLocation();
     const [isLiked, setIsLiked] = useState(false);
     const [likedMovies, setLikedMovies] = useState([]);
@@ -11,7 +11,7 @@ const MoviesCard = ({ card, handleMovieCardLike, handleDeleteMovie, savedMoviesI
     const handleLike = () => {
         setIsLiked(true);
         setLikedMovies([card.id, ...likedMovies])
-        handleMovieCardLike(card);
+        handleLikeMovie(card);
     }
 
     const handleDislike = () => {

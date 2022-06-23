@@ -23,16 +23,17 @@ function App() {
   const footerRoutes = ['/', '/movies', '/saved-movies'];
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
-  const [isUserChecked, setIsUserChecked] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [numberOfCardsToRender, setNumberOfCardsToRender] = useState(0);
-  const [numberOfCardsToAdd, setNumberOfCardsToAdd] = useState(0);
   const [savedMovies, setSavedMovies] = useState([]);
   const [savedMoviesIds, setSavedMoviesIds] = useState([]);
+  const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
+  const [isUserChecked, setIsUserChecked] = useState(false);
+  const [CardsToRender, setCardsToRender] = useState(0);
+  const [numberOfCardsToAdd, setNumberOfCardsToAdd] = useState(0);
+
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [isRequestOk, setIsRequestOk] = useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isSuccsesful, setIsRequestOk] = useState(false);
+  const [isPopupOpened, setIsInfoTooltipOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,7 +44,6 @@ function App() {
         .then(() => {
           setIsLoggedIn(true);
           setIsUserChecked(true);
-          console.log('tocken is valid')
         })
         .catch(err => {
           console.log(err);
@@ -73,7 +73,7 @@ function App() {
 
   // authorization
 
-  const handleInfoTooltipOpen = () => {
+  const handlePopupOpen = () => {
     setIsInfoTooltipOpen(false);
     setIsRequestOk(false);
   }
@@ -111,7 +111,7 @@ function App() {
   const handleUpdateUserInfo = ({ name, email }) => {
     mainApi.editUserData({ name, email })
       .then((res) => {
-        setIsRequestOk(!isRequestOk);
+        setIsRequestOk(!isSuccsesful);
         setIsInfoTooltipOpen(true);
         setCurrentUser(res);
 
@@ -123,12 +123,12 @@ function App() {
   }
  
 //search movies
-const getMovies = (filterCallback) => {
+const getMovies = (filteredAnswer) => {
   setIsDataLoading(true);
   return moviesApi.getMovies()
     .then((res) => {
       setMovies(res);
-      filterCallback(res);
+      filteredAnswer(res);
     })
     .catch((err) => {
       console.log(err);
@@ -139,8 +139,8 @@ const getMovies = (filterCallback) => {
     })
 }
 
-const handleMoviesSearchSumit = (filterCallback) => {
-  getMovies(filterCallback);
+const handleMoviesSearchSumit = (filteredAnswer) => {
+  getMovies(filteredAnswer);
 }
 
 // save movies 
@@ -155,7 +155,7 @@ const handleSaveMovies = (movie) => {
     })
 }
 
-const handleDeleteMoviesFromSaved = (movie) => {
+const handleDeleteFromSaved = (movie) => {
   return mainApi.deleteFromSaved(movie)
     .then((res) => {
       setSavedMovies(state => state.filter(el => el._id !== res._id));
@@ -168,7 +168,7 @@ const handleDeleteMoviesFromSaved = (movie) => {
 
 const handleDislikeMovie = (id) => {
   const movieToDelete = savedMovies.find((el) => el.movieId === id);
-  handleDeleteMoviesFromSaved(movieToDelete);
+  handleDeleteFromSaved(movieToDelete);
 }
 
 // resize
@@ -207,7 +207,7 @@ useMemo(() => {
       break;
   }
   console.log(currentWidth);
-  setNumberOfCardsToRender(res);
+  setCardsToRender(res);
   setNumberOfCardsToAdd(add);
 }, [currentWidth]
 );
@@ -229,16 +229,16 @@ useMemo(() => {
                         <ProtectedRoute loggedIn={isLoggedIn}>
                           <Movies movies={movies}
                             onSearchSubmit={handleMoviesSearchSumit}
-                            numberOfCardsToRender={numberOfCardsToRender}
+                            CardsToRender={CardsToRender}
                             numberOfCardsToAdd={numberOfCardsToAdd}
                             onSaveMovie={handleSaveMovies}
-                            onDeleteMovie={handleDeleteMoviesFromSaved}
+                            onDeleteMovie={handleDeleteFromSaved}
                             savedMoviesIds={savedMoviesIds}
                             onDislikeMovie={handleDislikeMovie}
                             isDataLoading={isDataLoading}
-                            isRequestOk={isRequestOk}
-                            isInfoTooltipOpen={isInfoTooltipOpen}
-                            onCloseInfoTooltip={handleInfoTooltipOpen} />
+                            isSuccsesful={isSuccsesful}
+                            isPopupOpened={isPopupOpened}
+                            onClosePopup={handlePopupOpen} />
                         </ProtectedRoute>
                       } />
               <Route
@@ -246,7 +246,7 @@ useMemo(() => {
                 element={
                   <ProtectedRoute loggedIn={isLoggedIn}>
                     <SavedMovies savedMovies={savedMovies}
-                      onDeleteMovie={handleDeleteMoviesFromSaved}
+                      onDeleteMovie={handleDeleteFromSaved}
                       savedMoviesIds={savedMoviesIds}
                       isDataLoading={isDataLoading} />
                   </ProtectedRoute>
@@ -258,19 +258,19 @@ useMemo(() => {
                     <Profile loggedIn={isLoggedIn}
                       onExit={handleExit}
                       onUpdateUserInfo={handleUpdateUserInfo}
-                      isRequestOk={isRequestOk}
-                      isInfoTooltipOpen={isInfoTooltipOpen}
-                      onCloseInfoTooltip={handleInfoTooltipOpen} />
+                      isSuccsesful={isSuccsesful}
+                      isPopupOpened={isPopupOpened}
+                      onClosePopup={handlePopupOpen} />
                   </ProtectedRoute>
                 } />
               <Route path='/signup' element={<Register onRegisterSubmit={handleRegisterSubmit}
-                isRequestOk={isRequestOk}
-                isInfoTooltipOpen={isInfoTooltipOpen}
-                onCloseInfoTooltip={handleInfoTooltipOpen} />}></Route>
+                isSuccsesful={isSuccsesful}
+                isPopupOpened={isPopupOpened}
+                onClosePopup={handlePopupOpen} />}></Route>
               <Route path='/signin' element={<Login onLoginSubmit={handleLoginSubmit}
-                isRequestOk={isRequestOk}
-                isInfoTooltipOpen={isInfoTooltipOpen}
-                onCloseInfoTooltip={handleInfoTooltipOpen} />}></Route>
+                isSuccsesful={isSuccsesful}
+                isPopupOpened={isPopupOpened}
+                onClosePopup={handlePopupOpen} />}></Route>
               <Route path='*' element={<PageNotFound />}></Route>
             </Routes>
             {footerRoutes.includes(location.pathname) ?

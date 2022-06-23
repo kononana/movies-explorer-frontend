@@ -9,7 +9,7 @@ import Preloader from '../Preloader/Preloader';
 const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading }) => {
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [shortFilteredMovies, setShortFilterseMovies] = useState([]);
-    const [isCheckbobChecked, setIsCheckboxChecked] = useState(false);
+    const [checkBoxChecked, setIsCheckboxChecked] = useState(false);
 
     useEffect(() => {
         setFilteredMovies([...savedMovies])
@@ -19,38 +19,44 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading
         onDeleteMovie(movie);
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('filteredMovies')) {
+            const filteredMovies = JSON.parse(localStorage.getItem('filteredMovies'));
+            setShortFilterseMovies(filteredMovies.filter((item) => item.duration <= 40));
+        }
+    }, [])
     const handleSearch = (message) => {
         const result = filterMovies(savedMovies, message)
         setFilteredMovies(result);
-        const resultShort = result.filter((item) => item.duration <= 40);
-        setShortFilterseMovies(resultShort);
+        const resultShort1 = result.filter((item) => item.duration <= 40);
+        setShortFilterseMovies(resultShort1);
     }
+    console.log(shortFilteredMovies)
 
     const handleCheckboxChange = () => {
-        setIsCheckboxChecked(!isCheckbobChecked)
+        setIsCheckboxChecked(!checkBoxChecked)
     }
-    ///
   
 
     return (
         <section className='movies saved-movies'>
             <div className='movies__content'>
-                <SearchForm isCheckbobChecked={isCheckbobChecked} onCheckboxChange={handleCheckboxChange} onSearchSubmit={handleSearch} />
+                <SearchForm checkBoxChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange} onSearchSubmit={handleSearch} />
                 {isDataLoading ?
                     <Preloader />
                     :
                     <>
-                        {isCheckbobChecked ?
+                        {checkBoxChecked ?
                             <>{(shortFilteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                             :
                             <>{(filteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                         }
                         <MoviesCardList>
                             
-                            {isCheckbobChecked ?
+                            {checkBoxChecked ?
                                 <>
-                                    {shortFilteredMovies.map((item) => (
-                                <MoviesCard card={item} {...item} key={item._id} handleDeleteMovie={handleDeleteMovie} savedMoviesIds={savedMoviesIds} />
+                                    {filteredMovies.filter((item) => item.duration <= 40).map((piece) => (
+                                <MoviesCard card={piece} {...piece} key={piece._id} handleDeleteMovie={handleDeleteMovie} savedMoviesIds={savedMoviesIds} />
                             ))}
                                 </>
                                 :
@@ -66,5 +72,6 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading
         </section>
     )
 }
+
 
 export default SavedMovies;
