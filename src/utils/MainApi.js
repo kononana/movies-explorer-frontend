@@ -84,7 +84,7 @@ class MainApi {
                 year: data.year || 'Нет данных',
                 description: data.description || 'Нет данных',
                 image: `https://api.nomoreparties.co${data.image.url}` || 'Нет данных',
-                trailerLink: data.trailerLink || 'Не указано',
+                trailerLink: data.trailerLink || 'https://www.youtube.com/',
                 thumbnail: `https://api.nomoreparties.co${data.image.formats.thumbnail.url}` || 'Не данных',
                 movieId: data.id,
                 nameRU: data.nameRU || 'Нет данных',
@@ -117,7 +117,7 @@ class MainApi {
     }
 }
 
-//const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+
 const mainApi = new MainApi({
     url: 'https://cinema.nomoredomains.xyz/',
 });

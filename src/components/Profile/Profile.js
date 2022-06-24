@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import "./Profile.css";
 import { useState } from "react";
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import { useFormWithValidation } from '../useFormWithValidation/useFormWithValidation';
-import InfoTooltip from "../InfoBox/InfoBox";
+import { useValidationForms } from '../useValidationForms/useValidationForms';
 import InfoBox from "../InfoBox/InfoBox";
 
 
 const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isSuccsesful, isPopupOpened, onClosePopup }) => {
-    const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
+    const { values, errors, isValid, handleChange, resetForm } = useValidationForms();
     const currentUser = React.useContext(CurrentUserContext);
     const [isInfoChanged, setIsInfoChanged] = useState(false);
 
@@ -45,17 +44,17 @@ const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isSuccsesful, isPopupOpen
         <>
             <section className="profile">
                 <form className="profile__container" onSubmit={handleUpdateUserProfile}>
-                    <h2 className="profile__greeting">Привет, {currentUser.name}!</h2>
+                    <h2 className="profile__hello">Привет, {currentUser.name}!</h2>
                     <div className="profile__info">
                         <div className="profile__info-container">
-                            <label htmlFor="name">Имя</label>
+                            <label name="name">Имя</label>
                             <input id="name" name='name' type='text' className={`profile__input profile__input_type_name ${!readOnly && 'profile__input_active'}`}
                                 value={values.name || ''} onChange={handleChange}
                                 required minLength='2' maxLength='30' readOnly={readOnly}></input>
                         </div>
                         <span className='form__error'>{errors.name}</span>
                         <div className="profile__info-container">
-                            <label htmlFor="email">E-mail</label>
+                            <label name="email">E-mail</label>
                             <input id='email' type='email' name="email" className={`profile__input profile__input_type_email ${!readOnly && 'profile__input_active'}`}
                                 value={values.email || ''} onChange={handleChange}
                                 required readOnly={readOnly}></input>

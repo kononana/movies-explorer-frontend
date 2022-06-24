@@ -235,10 +235,7 @@ useMemo(() => {
                             onDeleteMovie={handleDeleteFromSaved}
                             savedMoviesIds={savedMoviesIds}
                             onDislikeMovie={handleDislikeMovie}
-                            isDataLoading={isDataLoading}
-                            isSuccsesful={isSuccsesful}
-                            isPopupOpened={isPopupOpened}
-                            onClosePopup={handlePopupOpen} />
+                            isDataLoading={isDataLoading} />
                         </ProtectedRoute>
                       } />
               <Route

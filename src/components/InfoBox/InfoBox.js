@@ -16,7 +16,7 @@ function InfoBox({ isOpen, onClose, isSuccsesful }) {
                 <button className="popup__close-button" type="button" aria-label="Закрыть" onClick={onClose}></button>
                 <figure className="popup__figure">
                     <img className='popup__image' src={isSuccsesful ? right : wrong} alt="успеx" />
-                    <figcaption className="popup__figcaption popup__figcaption_type_infoTool">{figcaptionText}</figcaption>
+                    <figcaption className="popup__text popup__text_type_infoTool">{figcaptionText}</figcaption>
                 </figure>
             </div>
         </article>

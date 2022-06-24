@@ -15,9 +15,9 @@ const Popup = () => {
 
     return (
         <>
-            <label className='burger-menu'>
-                <input type='checkbox' checked={isChecked} onChange={handleChange} className='burger-menu__checkbox'></input>
-                <span className='burger-menu__burger'></span>
+            <label className='side-menu'>
+                <input type='checkbox' checked={isChecked} onChange={handleChange} className='side-menu__checkbox'></input>
+                <span className='side-menu__burger'></span>
             </label>
             <MobileMenu
                 isChecked={isChecked}

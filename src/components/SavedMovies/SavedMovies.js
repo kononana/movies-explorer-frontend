@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
-import filterMovies from '../../utils/functions';
+import filterMovies from '../../utils/utils';
 import Preloader from '../Preloader/Preloader';
 
 const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading }) => {

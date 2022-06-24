@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 const Navigation = ({ loggedIn }) => {
 
-    const linkActiveClass = ({ isActive }) => {
+    const linkIsActive = ({ isActive }) => {
         return `header__link ${isActive && 'header__link_active'}`;
     }
 
@@ -18,8 +18,8 @@ const Navigation = ({ loggedIn }) => {
                     :
                     <>
                         <div className='header__navigation'>
-                            <NavLink to='/movies' className={linkActiveClass}>Фильмы</NavLink>
-                            <NavLink to='/saved-movies' className={linkActiveClass}>Сохранённые фильмы</NavLink>
+                            <NavLink to='/movies' className={linkIsActive}>Фильмы</NavLink>
+                            <NavLink to='/saved-movies' className={linkIsActive}>Сохранённые фильмы</NavLink>
                         </div>
                         <Link to="/profile" className='header__profile'>
                           <span className='header__profile-text'>Аккаунт</span>

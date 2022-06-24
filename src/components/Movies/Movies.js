@@ -3,9 +3,9 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useEffect, useState } from 'react';
-import filterMovies from '../../utils/functions';
+import filterMovies from '../../utils/utils';
 import Preloader from '../Preloader/Preloader';
-import InfoBox from '../InfoBox/InfoBox';
+
 
 function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onSaveMovie, savedMoviesIds,
     onDislikeMovie, isDataLoading, isPopupOpened, onClosePopup, isSuccsesful }) {
@@ -116,7 +116,7 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
 
                 </div>
             </section>
-            <InfoBox isOpen={isPopupOpened} onClose={onClosePopup} isSuccsesful={isSuccsesful} />
+            
         </>
     )
 }
