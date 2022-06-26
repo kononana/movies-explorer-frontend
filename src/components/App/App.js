@@ -1,6 +1,6 @@
 import '../../vendor/normalize.css';
 import './App.css';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate,  Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -252,7 +252,8 @@ useMemo(() => {
                 path="/profile"
                 element={
                   <ProtectedRoute loggedIn={isLoggedIn}>
-                    <Profile loggedIn={isLoggedIn}
+                    <Profile 
+                      loggedIn={isLoggedIn}
                       onExit={handleExit}
                       onUpdateUserInfo={handleUpdateUserInfo}
                       isSuccsesful={isSuccsesful}
@@ -260,11 +261,13 @@ useMemo(() => {
                       onClosePopup={handlePopupOpen} />
                   </ProtectedRoute>
                 } />
-              <Route path='/signup' element={<Register onRegisterSubmit={handleRegisterSubmit}
+              <Route path='/signup' element={isLoggedIn ?  <Navigate to="/" /> :
+               <Register onRegisterSubmit={handleRegisterSubmit}
                 isSuccsesful={isSuccsesful}
                 isPopupOpened={isPopupOpened}
                 onClosePopup={handlePopupOpen} />}></Route>
-              <Route path='/signin' element={<Login onLoginSubmit={handleLoginSubmit}
+              <Route path='/signin' element={isLoggedIn ? <Navigate to="/" /> :
+              <Login onLoginSubmit={handleLoginSubmit}
                 isSuccsesful={isSuccsesful}
                 isPopupOpened={isPopupOpened}
                 onClosePopup={handlePopupOpen} />}></Route>

@@ -7,7 +7,7 @@ import InfoBox from "../InfoBox/InfoBox";
 
 
 const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isSuccsesful, isPopupOpened, onClosePopup }) => {
-    const { values, errors, isValid, handleChange, resetForm } = useValidationForms();
+    const { values, errors, isValid, handleChange, resetForm } = useValidationForms({ name: '', email: '' });
     const currentUser = React.useContext(CurrentUserContext);
     const [isInfoChanged, setIsInfoChanged] = useState(false);
 
@@ -49,14 +49,14 @@ const Profile = ({ loggedIn, onExit, onUpdateUserInfo, isSuccsesful, isPopupOpen
                         <div className="profile__info-container">
                             <label name="name">Имя</label>
                             <input id="name" name='name' type='text' className={`profile__input profile__input_type_name ${!readOnly && 'profile__input_active'}`}
-                                value={values.name || ''} onChange={handleChange}
+                                value={values.name} onChange={handleChange}
                                 required minLength='2' maxLength='30' readOnly={readOnly}></input>
                         </div>
                         <span className='form__error'>{errors.name}</span>
                         <div className="profile__info-container">
                             <label name="email">E-mail</label>
                             <input id='email' type='email' name="email" className={`profile__input profile__input_type_email ${!readOnly && 'profile__input_active'}`}
-                                value={values.email || ''} onChange={handleChange}
+                                value={values.email} onChange={handleChange}
                                 required readOnly={readOnly}></input>
                         </div>
                         <span className='form__error'>{errors.email}</span>
