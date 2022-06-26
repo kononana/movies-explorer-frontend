@@ -2,7 +2,7 @@ import './SignForm.css';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
-const SignForm = ({ onSubmit, isValid, titleText, buttonText, spanText, linkText, linkTo, children }) => {
+const SignForm = ({ onSubmit, isValid, titleText, buttonText, spanText, linkText, linkTo, children, errors }) => {
 
     const location = useLocation();
 
@@ -16,7 +16,7 @@ const SignForm = ({ onSubmit, isValid, titleText, buttonText, spanText, linkText
                 <div className='form__input-container'>
                     {children}
                 </div>
-                <button type='submit' disabled={!isValid} 
+                <button type='submit' disabled={!isValid}
                 className={`form__button ${location.pathname === '/signin' && 'form__button_type_login'} ${!isValid && 'form__button_disabled'}`}>{buttonText}</button>
             </form>
             <span className='form__signin'>{spanText} <Link className="form__link" to={linkTo}>{linkText}</Link></span>

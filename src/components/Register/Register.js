@@ -4,8 +4,9 @@ import InfoBox from '../InfoBox/InfoBox';
 import { useValidationForms } from '../useValidationForms/useValidationForms';
 
 const Register = ({ onRegisterSubmit, isPopupOpened, onClosePopup, isSuccsesful }) => {
-    const { values, errors, isValid, handleChange } = useValidationForms();
+    const { values, errors, isValid, handleChange } = useValidationForms({name: '', email: '', password: ''});
 
+    const realyValid = isValid && errors.email === '';
     const onSubmit = (event) => {
         event.preventDefault();
         onRegisterSubmit(values)
@@ -13,7 +14,7 @@ const Register = ({ onRegisterSubmit, isPopupOpened, onClosePopup, isSuccsesful 
 
     return (
         <>
-            <SignForm onSubmit={onSubmit} isValid={isValid} titleText='Добро пожаловать!' buttonText='Зарегистрироваться' spanText='Уже зарегистрированы?' linkText='Войти' linkTo='/signin' >
+            <SignForm onSubmit={onSubmit} titleText='Добро пожаловать!' buttonText='Зарегистрироваться' spanText='Уже зарегистрированы?' linkText='Войти' linkTo='/signin' realyValid={realyValid} >
                 <label name='register-name' className='form__label'>Имя</label>
                 <input type='text' id='register-name' name='name' className='form__input form__input_type_name'
                     required minLength='2' maxLength='30' value={values.name || ''} onChange={handleChange}></input>
