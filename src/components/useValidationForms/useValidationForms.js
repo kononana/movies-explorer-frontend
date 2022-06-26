@@ -13,14 +13,13 @@ export function useValidationForms(props) {
     const value = target.value;
     setValues({...values, [name]: value});
 
-    const validEmail = name === 'email' ? validator.isEmail(value) : true;
+    const validEmail = name === 'email' ? validator.isEmail(value) : true; 
 
     setErrors({...errors, [name]: event.target.validationMessage})
     if (name === 'email' && !validEmail && value.includes('@')) {
       setErrors({...errors, [name]: 'введите домен верхнего уровня после знака @'});
     }
     setIsValid(event.target.closest("form").checkValidity())
-
   };
 
   const resetForm = useCallback(

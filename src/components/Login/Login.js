@@ -6,7 +6,7 @@ import InfoBox from '../InfoBox/InfoBox';
 const Login = ({ onLoginSubmit, isSuccsesful, isPopupOpened, onClosePopup }) => {
     const { values, errors, isValid, handleChange } = useValidationForms({ email: '', password: '' });
 
-    const realyValid = isValid && errors.email === '';
+    const reallyValid = isValid && errors.email === '';
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -15,7 +15,7 @@ const Login = ({ onLoginSubmit, isSuccsesful, isPopupOpened, onClosePopup }) => 
 
     return (
         <>
-        <SignForm  onSubmit={onSubmit} titleText='Рады видеть!' buttonText='Войти' spanText='Ещё не зарегистрированы?' linkText='Регистрация' linkTo='/signup' realyValid={realyValid}>
+        <SignForm  onSubmit={onSubmit} titleText='Рады видеть!' buttonText='Войти' spanText='Ещё не зарегистрированы?' linkText='Регистрация' linkTo='/signup' reallyValid={reallyValid}>
             <label name='login-email' className='form__label'>E-mail</label>
             <input type='email' id='login-email' name='email' className='form__input form__input_type_email'
                 required value={values.email} onChange={handleChange}></input>
