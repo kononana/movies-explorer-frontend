@@ -95,7 +95,7 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
 
                             {checkBoxChecked ?
                                 <>
-                                    {shortFilteredMovies.length > shortFilteredMovies.slice(0, CardsToRender).length && shortFilteredMovies.length >= cardsToRender ?
+                                    {shortFilteredMovies.length > shortFilteredMovies.slice(0, CardsToRender).length && shortFilteredMovies.length > cardsToRender ?
                                         <div className='more-btn-container'>
                                             <button className='more-btn' onClick={addMoviesOnClick}>Ещё</button>
                                         </div>
@@ -104,7 +104,7 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
                                 </>
                                 :
                                 <>
-                                    {filteredMovies.length > filteredMovies.slice(0, CardsToRender).length && filteredMovies.length >= cardsToRender ?
+                                    {filteredMovies.length > filteredMovies.slice(0, CardsToRender).length && filteredMovies.length > cardsToRender ?
                                         <div className='more-btn-container'>
                                             <button className='more-btn' onClick={addMoviesOnClick}>Ещё</button>
                                         </div>
