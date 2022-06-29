@@ -10,6 +10,7 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [shortFilteredMovies, setShortFilterseMovies] = useState([]);
     const [checkBoxChecked, setIsCheckboxChecked] = useState(false);
+    const [isSearchDone, setSearchDone] = useState(false);
 
     useEffect(() => {
         setFilteredMovies([...savedMovies])
@@ -33,23 +34,24 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, savedMoviesIds, isDataLoading
     }
     console.log(shortFilteredMovies)
 
-    const handleCheckboxChange = () => {
-        setIsCheckboxChecked(!checkBoxChecked)
-    }
-  
+    function changeCheckbox(value) {
+        setIsCheckboxChecked(value)
+        localStorage.setItem('checkboxStatus', JSON.stringify(!checkBoxChecked))
+        setSearchDone(true)
+      }
 
     return (
         <section className='movies saved-movies'>
             <div className='movies__content'>
-                <SearchForm checkBoxChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange} onSearchSubmit={handleSearch} />
+                <SearchForm checkBoxChecked={checkBoxChecked} changeCheckbox={changeCheckbox} onSearchSubmit={handleSearch} />
                 {isDataLoading ?
                     <Preloader />
                     :
                     <>
                         {checkBoxChecked ?
-                            <>{(shortFilteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
+                            <>{(isSearchDone && shortFilteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                             :
-                            <>{(filteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
+                            <>{(isSearchDone && filteredMovies.length === 0) && <span className='movies__not-found'>Ничего не найдено</span>}</>
                         }
                         <MoviesCardList>
                             

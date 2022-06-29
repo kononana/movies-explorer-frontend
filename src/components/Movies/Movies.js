@@ -12,7 +12,7 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
 
     const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem('filteredMovies')) || []);
     const [shortFilteredMovies, setShortFilterseMovies] = useState(JSON.parse(localStorage.getItem('shortFilteredMovies')) || []);
-    const [checkBoxChecked, setIsCheckboxChecked] = useState(JSON.parse(localStorage.getItem('checkboxStatus')) || false);
+    const [checkBoxChecked, setIsCheckboxChecked] = useState(false);
     const [cardsToRender, setCardsToRender] = useState(CardsToRender);
     const [isSearchDone, setSearchDone] = useState(false);
 
@@ -24,10 +24,16 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
         }
     }, [])
 
-    const handleCheckboxChange = () => {
-        setIsCheckboxChecked(!checkBoxChecked);
-        setSearchDone(true);
-    }
+    function changeCheckbox(value) {
+        setIsCheckboxChecked(value)
+        localStorage.setItem('checkboxStatus', JSON.stringify(!checkBoxChecked))
+        setSearchDone(true)
+      }
+
+    // const handleCheckboxChange = () => {
+    //     setIsCheckboxChecked(!checkBoxChecked);
+    //     setSearchDone(true);
+    // }
 
     const getLoadFromLocalstorage = (message) => {
         filterMovies(movies, message)
@@ -41,14 +47,15 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
             setShortFilterseMovies(resultShort);
             if (checkBoxChecked) {
                 localStorage.setItem('shortFilteredMovies', JSON.stringify(resultShort));
-                localStorage.removeItem('filteredMovies');
+                localStorage.removeItem('filteredMovies'); 
             } else {
                 localStorage.setItem('filteredMovies', JSON.stringify(result));
                 localStorage.removeItem('shortFilteredMovies');
             }
             localStorage.setItem('checkboxStatus', JSON.stringify(checkBoxChecked));
+            
         });
-
+       
         setSearchDone(true);
     }
 
@@ -64,7 +71,7 @@ function Movies({ movies, onSearchSubmit, CardsToRender, numberOfCardsToAdd, onS
         <>
             <section className='movies'>
                 <div className='movies__content'>
-                    <SearchForm checkBoxChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange}
+                    <SearchForm checkBoxChecked={checkBoxChecked} changeCheckbox={changeCheckbox}
                         onSearchSubmit={handleSearch} getLoadFromLocalstorage={getLoadFromLocalstorage} />
                     {isDataLoading ?
                         <Preloader />

@@ -2,9 +2,8 @@ import './SearchForm.css';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
-import Filtration from '../Filtration/Filtration';
 
-const SearchForm = ({ checkBoxChecked, onCheckboxChange, onSearchSubmit}) => {
+const SearchForm = ({ checkBoxChecked, changeCheckbox, onSearchSubmit}) => {
     const location = useLocation();
     const [error, setError] = useState('');
     const [searchMessage, setSearchMessage] = useState(location.pathname === '/movies' ? localStorage.getItem('searchMessage') || '' : '');
@@ -14,8 +13,8 @@ const SearchForm = ({ checkBoxChecked, onCheckboxChange, onSearchSubmit}) => {
         setSearchMessage(event.target.value);
     }
 
-    const handleCheckboxChange = () => {
-        onCheckboxChange();
+    function handleChangeCheckbox() {
+      changeCheckbox(prevState => !prevState)
     }
 
     const handleSubmit = (event) => {
@@ -37,7 +36,11 @@ const SearchForm = ({ checkBoxChecked, onCheckboxChange, onSearchSubmit}) => {
           <input type='text' value={searchMessage || ''} onChange={handleChange} className='search-form__input' placeholder='Фильм'></input>
             <button className="search-form__submit-button"></button>
           </div>
-          <Filtration isChecked={checkBoxChecked} onCheckboxChange={handleCheckboxChange} />
+          <label className="search-form__switch" >
+        <input type="checkbox" className="search-form__checkbox" checked={checkBoxChecked} onChange={handleChangeCheckbox}/>
+        <span className="search-form__slider"></span>
+        <span className="search-form__slider-name">Короткометражки</span>
+        </label>
         </form>
   
   
