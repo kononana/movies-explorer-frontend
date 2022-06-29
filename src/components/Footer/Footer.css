@@ -1,0 +1,117 @@
+.footer {
+    padding-top: 79px;
+    padding-bottom: 20px;
+  }
+  
+  .section-foot {
+    max-width: 1280px;
+    padding-right: 70px;
+    padding-left: 70px;
+    box-sizing: border-box;
+    margin: auto;
+  }
+
+  .footer__header {
+    font-size: 13px;
+    line-height: 15.73px;
+    color: #A0A0A0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E8E8E8;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .footer__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+  }
+  
+  .footer__copyright {
+    font-size: 13px;
+    line-height: 15.73px;
+    margin: 0;
+  }
+  
+  .footer__links {
+    padding-left: 0px;
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+  }
+  
+  .footer__list {
+    padding-right: 20px;
+  }
+  
+  .footer__list:last-of-type {
+    padding-right: 0;
+  }
+  
+  .footer__link {
+    font-size: 13px;
+    line-height: 15.73px;
+    text-decoration: none;
+    color: black;
+    transition: all 0.1s linear;
+  }
+  
+  .footer__link:hover {
+    opacity: 0.7;
+  }
+  
+  @media screen and (max-width: 840px) {
+    .footer {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+    .section-foot {
+      padding-right: 30px;
+      padding-left: 30px;
+      }
+  }
+  
+  @media screen and (max-width: 420px) {
+    .footer {
+      padding-bottom: 10px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    .section-foot {
+      padding-bottom: 10px;
+      padding-right: 10px;
+      }
+    .footer__header {
+      font-size: 12px;
+      line-height: 14.52px;
+    }
+  
+    .footer__container {
+      padding-top: 30px;
+      flex-direction: column-reverse;
+    }
+  
+    .footer__links {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer__list {
+      padding-right: 0;
+      padding-bottom: 12px;
+    }
+  
+    .footer__link {
+      font-size: 12px;
+      line-height: 14.52px;
+    }
+  
+  .footer__copyright {
+    padding-top: 18px;
+    font-size: 12px;
+    line-height: 14.52px;
+    color: #A0A0A0;
+    }
+  }
+  
