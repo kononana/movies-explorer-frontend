@@ -1,6 +1,6 @@
  
-Будущая сcылка на сайт 
-https://github.com/kononana/movies-explorer-frontend
+Сcылка на сайт 
+https://cinematic.nomoredomains.xyz/
 
 
 
